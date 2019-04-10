@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.train.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.train.entity.Question" >
+    <id column="qid" property="qid" jdbcType="INTEGER" />
+    <result column="tid" property="tid" jdbcType="INTEGER" />
+    <result column="qtitle" property="qtitle" jdbcType="VARCHAR" />
+    <result column="qstyle" property="qstyle" jdbcType="INTEGER" />
+    <result column="qanswer" property="qanswer" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    qid, tid, qtitle, qstyle, qanswer
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from train_question
+    where qid = #{qid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from train_question
+    where qid = #{qid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.train.entity.Question" useGeneratedKeys="true" keyProperty="qid">
+    insert into train_question (qid, tid, qtitle, 
+      qstyle, qanswer)
+    values (#{qid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, #{qtitle,jdbcType=VARCHAR}, 
+      #{qstyle,jdbcType=INTEGER}, #{qanswer,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.train.entity.Question" >
+    insert into train_question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="qid != null" >
+        qid,
+      </if>
+      <if test="tid != null" >
+        tid,
+      </if>
+      <if test="qtitle != null" >
+        qtitle,
+      </if>
+      <if test="qstyle != null" >
+        qstyle,
+      </if>
+      <if test="qanswer != null" >
+        qanswer,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="qid != null" >
+        #{qid,jdbcType=INTEGER},
+      </if>
+      <if test="tid != null" >
+        #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="qtitle != null" >
+        #{qtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="qstyle != null" >
+        #{qstyle,jdbcType=INTEGER},
+      </if>
+      <if test="qanswer != null" >
+        #{qanswer,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.train.entity.Question" >
+    update train_question
+    <set >
+      <if test="tid != null" >
+        tid = #{tid,jdbcType=INTEGER},
+      </if>
+      <if test="qtitle != null" >
+        qtitle = #{qtitle,jdbcType=VARCHAR},
+      </if>
+      <if test="qstyle != null" >
+        qstyle = #{qstyle,jdbcType=INTEGER},
+      </if>
+      <if test="qanswer != null" >
+        qanswer = #{qanswer,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where qid = #{qid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.train.entity.Question" >
+    update train_question
+    set tid = #{tid,jdbcType=INTEGER},
+      qtitle = #{qtitle,jdbcType=VARCHAR},
+      qstyle = #{qstyle,jdbcType=INTEGER},
+      qanswer = #{qanswer,jdbcType=VARCHAR}
+    where qid = #{qid,jdbcType=INTEGER}
+  </update>
+  <select id="selectByTid" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    select * from train_question where tid = #{arg0} order by qstyle
+  </select>
+</mapper>

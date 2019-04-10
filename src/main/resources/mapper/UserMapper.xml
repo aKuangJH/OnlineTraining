@@ -136,4 +136,7 @@
       salt = #{salt,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=INTEGER}
   </update>
+  <select id="selectUserByNameAndPsw" resultMap="BaseResultMap">
+    select * from train_user where username = #{arg0} and password = #{arg1}
+  </select>
 </mapper>
