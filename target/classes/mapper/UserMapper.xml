@@ -11,9 +11,10 @@
     <result column="phone" property="phone" jdbcType="VARCHAR" />
     <result column="role" property="role" jdbcType="INTEGER" />
     <result column="salt" property="salt" jdbcType="VARCHAR" />
+    <result column="uimg" property="uimg" jdbcType="VARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    uid, username, realname, password, email, description, phone, role, salt
+    uid, username, realname, password, email, description, phone, role, salt, uimg
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -28,10 +29,12 @@
   <insert id="insert" parameterType="com.cn.train.entity.User" >
     insert into train_user (uid, username, realname, 
       password, email, description, 
-      phone, role, salt)
+      phone, role, salt, 
+      uimg)
     values (#{uid,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{realname,jdbcType=VARCHAR}, 
       #{password,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{phone,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR})
+      #{phone,jdbcType=VARCHAR}, #{role,jdbcType=INTEGER}, #{salt,jdbcType=VARCHAR}, 
+      #{uimg,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.train.entity.User" >
     insert into train_user
@@ -63,6 +66,9 @@
       <if test="salt != null" >
         salt,
       </if>
+      <if test="uimg != null" >
+        uimg,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="uid != null" >
@@ -91,6 +97,9 @@
       </if>
       <if test="salt != null" >
         #{salt,jdbcType=VARCHAR},
+      </if>
+      <if test="uimg != null" >
+        #{uimg,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -121,6 +130,9 @@
       <if test="salt != null" >
         salt = #{salt,jdbcType=VARCHAR},
       </if>
+      <if test="uimg != null" >
+        uimg = #{uimg,jdbcType=VARCHAR},
+      </if>
     </set>
     where uid = #{uid,jdbcType=INTEGER}
   </update>
@@ -133,10 +145,14 @@
       description = #{description,jdbcType=VARCHAR},
       phone = #{phone,jdbcType=VARCHAR},
       role = #{role,jdbcType=INTEGER},
-      salt = #{salt,jdbcType=VARCHAR}
+      salt = #{salt,jdbcType=VARCHAR},
+      uimg = #{uimg,jdbcType=VARCHAR}
     where uid = #{uid,jdbcType=INTEGER}
   </update>
   <select id="selectUserByNameAndPsw" resultMap="BaseResultMap">
     select * from train_user where username = #{arg0} and password = #{arg1}
+  </select>
+  <select id="selectUserByName" resultMap="BaseResultMap">
+    select * from train_user where username = #{arg0}
   </select>
 </mapper>

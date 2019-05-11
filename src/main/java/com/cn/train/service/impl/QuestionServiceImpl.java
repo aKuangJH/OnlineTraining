@@ -7,7 +7,7 @@ import com.cn.train.dao.SelectMapper;
 import com.cn.train.entity.Question;
 import com.cn.train.entity.Select;
 import com.cn.train.entity.bussiness.Options;
-import com.cn.train.entity.bussiness.QuestionBussiness;
+import com.cn.train.entity.bussiness.QuestionBusiness;
 import com.cn.train.service.QuestionService;
 import com.cn.train.utils.ReturnHelper;
 import com.cn.train.view.bean.QuestionBean;
@@ -93,19 +93,19 @@ public class QuestionServiceImpl implements QuestionService {
         List<Question> questionlist = questionMapper.selectByTid(tid);
 
         if(null != questionlist && questionlist.size()>0){
-            List<QuestionBussiness> questionBussinesseslist = new ArrayList<>();
+            List<QuestionBusiness> questionBussinesseslist = new ArrayList<>();
 
             for(int i=0;i<questionlist.size();i++){
-                QuestionBussiness questionBussiness = new QuestionBussiness();
+                QuestionBusiness questionBusiness = new QuestionBusiness();
 
                 Question question = questionlist.get(i);
 
                 if(question.getQstyle() == 0){
                     //选择题
-                    questionBussiness.setQid(question.getQid());
-                    questionBussiness.setQtitle(question.getQtitle());
-                    questionBussiness.setQanswer(question.getQanswer());
-                    questionBussiness.setQstyle(question.getQstyle());
+                    questionBusiness.setQid(question.getQid());
+                    questionBusiness.setQtitle(question.getQtitle());
+                    questionBusiness.setQanswer(question.getQanswer());
+                    questionBusiness.setQstyle(question.getQstyle());
 
                     //获取选项
                     Select select = selectMapper.selectByQid(question.getQid());
@@ -119,17 +119,17 @@ public class QuestionServiceImpl implements QuestionService {
                     options.setOptionC(obj.getString("C"));
                     options.setOptionD(obj.getString("D"));
 
-                    questionBussiness.setOptions(options);
+                    questionBusiness.setOptions(options);
 
-                    questionBussinesseslist.add(questionBussiness);
+                    questionBussinesseslist.add(questionBusiness);
                 }else if(question.getQstyle() == 1){
                     //填空题
-                    questionBussiness.setQid(question.getQid());
-                    questionBussiness.setQtitle(question.getQtitle());
-                    questionBussiness.setQanswer(question.getQanswer());
-                    questionBussiness.setQstyle(question.getQstyle());
+                    questionBusiness.setQid(question.getQid());
+                    questionBusiness.setQtitle(question.getQtitle());
+                    questionBusiness.setQanswer(question.getQanswer());
+                    questionBusiness.setQstyle(question.getQstyle());
 
-                    questionBussinesseslist.add(questionBussiness);
+                    questionBussinesseslist.add(questionBusiness);
                 }
             }
             map = ReturnHelper.success("success");

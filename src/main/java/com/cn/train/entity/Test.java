@@ -13,6 +13,8 @@ public class Test {
 
     private String status;
 
+    private Integer testauthority;
+
     public Integer getTid() {
         return tid;
     }
@@ -51,5 +53,13 @@ public class Test {
 
     public void setStatus(String status) {
         this.status = status == null ? null : status.trim();
+    }
+
+    public Integer getTestauthority() {
+        return testauthority;
+    }
+
+    public void setTestauthority(Integer testauthority) {
+        this.testauthority = testauthority;
     }
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.train.dao.HistoryMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.train.entity.History" >
+    <id column="ihid" property="ihid" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="infoid" property="infoid" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ihid, uid, infoid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from train_info_history
+    where ihid = #{ihid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from train_info_history
+    where ihid = #{ihid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.train.entity.History" >
+    insert into train_info_history (ihid, uid, infoid
+      )
+    values (#{ihid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{infoid,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.cn.train.entity.History" >
+    insert into train_info_history
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="ihid != null" >
+        ihid,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="infoid != null" >
+        infoid,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="ihid != null" >
+        #{ihid,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="infoid != null" >
+        #{infoid,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.train.entity.History" >
+    update train_info_history
+    <set >
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="infoid != null" >
+        infoid = #{infoid,jdbcType=INTEGER},
+      </if>
+    </set>
+    where ihid = #{ihid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.train.entity.History" >
+    update train_info_history
+    set uid = #{uid,jdbcType=INTEGER},
+      infoid = #{infoid,jdbcType=INTEGER}
+    where ihid = #{ihid,jdbcType=INTEGER}
+  </update>
+  <select id="getAllHistoryByUid" resultMap="BaseResultMap">
+    select * from train_info_history where uid = #{arg0}
+  </select>
+  <select id="getTotalCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select COUNT(*) from train_info_history where uid = #{arg0}
+  </select>
+</mapper>

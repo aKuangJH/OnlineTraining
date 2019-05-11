@@ -19,6 +19,8 @@ public class User {
 
     private String salt;
 
+    private String uimg;
+
     public Integer getUid() {
         return uid;
     }
@@ -91,6 +93,14 @@ public class User {
         this.salt = salt == null ? null : salt.trim();
     }
 
+    public String getUimg() {
+        return uimg;
+    }
+
+    public void setUimg(String uimg) {
+        this.uimg = uimg == null ? null : uimg.trim();
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -103,6 +113,7 @@ public class User {
                 ", phone='" + phone + '\'' +
                 ", role=" + role +
                 ", salt='" + salt + '\'' +
+                ", uimg='" + uimg + '\'' +
                 '}';
     }
 }

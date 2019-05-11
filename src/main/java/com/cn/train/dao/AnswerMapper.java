@@ -14,4 +14,8 @@ public interface AnswerMapper {
     int updateByPrimaryKeySelective(Answer record);
 
     int updateByPrimaryKey(Answer record);
+
+    int getTestAnswerCount(Integer tid);
+
+    Answer selectByTidAndUid(Integer tid, Integer uid);
 }

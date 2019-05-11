@@ -1,5 +1,7 @@
 package com.cn.train.entity;
 
+import java.util.Date;
+
 public class Answer {
     private Integer aid;
 
@@ -8,6 +10,8 @@ public class Answer {
     private Integer tid;
 
     private String answer;
+
+    private Date createtime;
 
     public Integer getAid() {
         return aid;
@@ -39,5 +43,13 @@ public class Answer {
 
     public void setAnswer(String answer) {
         this.answer = answer == null ? null : answer.trim();
+    }
+
+    public Date getCreatetime() {
+        return createtime;
+    }
+
+    public void setCreatetime(Date createtime) {
+        this.createtime = createtime;
     }
 }

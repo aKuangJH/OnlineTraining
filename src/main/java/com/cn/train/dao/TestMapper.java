@@ -18,4 +18,10 @@ public interface TestMapper {
     int updateByPrimaryKey(Test record);
 
     List<Test> getAllTestByUid(Integer uid);
+
+    List<Test> getTotalTest(String status, Integer testauthority);
+
+    List<Test> getAllTestByStatusAndAuthority(String status, Integer testauthority);
+
+    int getCountTestByStatusAndAuthority(String status, Integer testauthority);
 }

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.cn.train.dao.InformationMapper" >
+  <resultMap id="BaseResultMap" type="com.cn.train.entity.Information" >
+    <id column="infoid" property="infoid" jdbcType="INTEGER" />
+    <result column="infotitle" property="infotitle" jdbcType="VARCHAR" />
+    <result column="istyid" property="istyid" jdbcType="INTEGER" />
+    <result column="infoauthority" property="infoauthority" jdbcType="INTEGER" />
+    <result column="uid" property="uid" jdbcType="INTEGER" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.cn.train.entity.Information" extends="BaseResultMap" >
+    <result column="infocontent" property="infocontent" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    infoid, infotitle, istyid, infoauthority, uid, createtime
+  </sql>
+  <sql id="Blob_Column_List" >
+    infocontent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from train_information
+    where infoid = #{infoid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from train_information
+    where infoid = #{infoid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.cn.train.entity.Information" >
+    insert into train_information (infoid, infotitle, istyid, 
+      infoauthority, uid, createtime, 
+      infocontent)
+    values (#{infoid,jdbcType=INTEGER}, #{infotitle,jdbcType=VARCHAR}, #{istyid,jdbcType=INTEGER}, 
+      #{infoauthority,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{infocontent,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="infoid" parameterType="com.cn.train.entity.Information" >
+    insert into train_information
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="infoid != null" >
+        infoid,
+      </if>
+      <if test="infotitle != null" >
+        infotitle,
+      </if>
+      <if test="istyid != null" >
+        istyid,
+      </if>
+      <if test="infoauthority != null" >
+        infoauthority,
+      </if>
+      <if test="uid != null" >
+        uid,
+      </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
+      <if test="infocontent != null" >
+        infocontent,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="infoid != null" >
+        #{infoid,jdbcType=INTEGER},
+      </if>
+      <if test="infotitle != null" >
+        #{infotitle,jdbcType=VARCHAR},
+      </if>
+      <if test="istyid != null" >
+        #{istyid,jdbcType=INTEGER},
+      </if>
+      <if test="infoauthority != null" >
+        #{infoauthority,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="infocontent != null" >
+        #{infocontent,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.cn.train.entity.Information" >
+    update train_information
+    <set >
+      <if test="infotitle != null" >
+        infotitle = #{infotitle,jdbcType=VARCHAR},
+      </if>
+      <if test="istyid != null" >
+        istyid = #{istyid,jdbcType=INTEGER},
+      </if>
+      <if test="infoauthority != null" >
+        infoauthority = #{infoauthority,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null" >
+        uid = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="infocontent != null" >
+        infocontent = #{infocontent,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where infoid = #{infoid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.cn.train.entity.Information" >
+    update train_information
+    set infotitle = #{infotitle,jdbcType=VARCHAR},
+      istyid = #{istyid,jdbcType=INTEGER},
+      infoauthority = #{infoauthority,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP},
+      infocontent = #{infocontent,jdbcType=LONGVARCHAR}
+    where infoid = #{infoid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.cn.train.entity.Information" >
+    update train_information
+    set infotitle = #{infotitle,jdbcType=VARCHAR},
+      istyid = #{istyid,jdbcType=INTEGER},
+      infoauthority = #{infoauthority,jdbcType=INTEGER},
+      uid = #{uid,jdbcType=INTEGER},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
+    where infoid = #{infoid,jdbcType=INTEGER}
+  </update>
+  <select id="getAllInformations" resultMap="BaseResultMap">
+    select * from train_information
+  </select>
+  <select id="getAllCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select COUNT(*) from train_information
+  </select>
+  <select id="getInformationsByStyle" resultMap="BaseResultMap">
+    select * from train_information where istyid = #{arg0}
+  </select>
+</mapper>

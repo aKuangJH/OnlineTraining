@@ -6,9 +6,10 @@
     <result column="uid" property="uid" jdbcType="INTEGER" />
     <result column="tid" property="tid" jdbcType="INTEGER" />
     <result column="answer" property="answer" jdbcType="VARCHAR" />
+    <result column="createtime" property="createtime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    aid, uid, tid, answer
+    aid, uid, tid, answer, createtime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +23,9 @@
   </delete>
   <insert id="insert" parameterType="com.cn.train.entity.Answer" >
     insert into train_answer (aid, uid, tid, 
-      answer)
+      answer, createtime)
     values (#{aid,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{tid,jdbcType=INTEGER}, 
-      #{answer,jdbcType=VARCHAR})
+      #{answer,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.cn.train.entity.Answer" >
     insert into train_answer
@@ -41,6 +42,9 @@
       <if test="answer != null" >
         answer,
       </if>
+      <if test="createtime != null" >
+        createtime,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="aid != null" >
@@ -54,6 +58,9 @@
       </if>
       <if test="answer != null" >
         #{answer,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -69,6 +76,9 @@
       <if test="answer != null" >
         answer = #{answer,jdbcType=VARCHAR},
       </if>
+      <if test="createtime != null" >
+        createtime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
     </set>
     where aid = #{aid,jdbcType=INTEGER}
   </update>
@@ -76,7 +86,14 @@
     update train_answer
     set uid = #{uid,jdbcType=INTEGER},
       tid = #{tid,jdbcType=INTEGER},
-      answer = #{answer,jdbcType=VARCHAR}
+      answer = #{answer,jdbcType=VARCHAR},
+      createtime = #{createtime,jdbcType=TIMESTAMP}
     where aid = #{aid,jdbcType=INTEGER}
   </update>
+  <select id="getTestAnswerCount" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+    select count(*) from train_answer where tid = #{arg0}
+  </select>
+  <select id="selectByTidAndUid" resultMap="BaseResultMap">
+    select * from train_answer where tid = #{arg0} and uid = #{arg1}
+  </select>
 </mapper>

@@ -18,4 +18,5 @@ public interface QuestionMapper {
     int updateByPrimaryKey(Question record);
 
     List<Question> selectByTid(Integer tid);
+
 }

@@ -1,8 +1,10 @@
 package com.cn.train.controller;
 
-import com.cn.train.view.bean.QuestionBean;
+import com.cn.train.dao.QuestionMapper;
+import com.cn.train.entity.Question;
 import com.cn.train.service.QuestionService;
 import com.cn.train.utils.ReturnHelper;
+import com.cn.train.view.bean.QuestionBean;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,10 +30,12 @@ public class QuestionController {
 
     @Autowired
     QuestionService questionService;
+    @Autowired
+    QuestionMapper questionMapper;
 
 
     @RequestMapping(value = "showallquestions")
-    @ApiOperation(value = "查询套题试题", httpMethod = "POST", notes = "根据套题号查询试题")
+    @ApiOperation(value = "查询套题试题", httpMethod = "GET", notes = "根据套题号查询试题")
     public Map<String, Object> showAllQuestionsByTid(@RequestParam("tid") Integer tid){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
@@ -52,8 +57,14 @@ public class QuestionController {
     public Map<String, Object> addQuestionToTest(QuestionBean questionBean){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
-            if(null != questionBean && StringUtils.isNotBlank(questionBean.getQtitle())){
-                map = questionService.addQuestion(questionBean);
+            if(null != questionBean && StringUtils.isNotBlank(questionBean.getQtitle()) && null != questionBean.getTid()){
+                List<Question> qlist = questionMapper.selectByTid(questionBean.getTid());
+                if(qlist.size()<10){
+                    map = questionService.addQuestion(questionBean);
+                }else {
+                    map = ReturnHelper.fail("条数已满");
+                    map.put("code",2);
+                }
             }else {
                 map = ReturnHelper.fail("参数校验失败");
             }
