@@ -7,5 +7,5 @@ public interface InformationCollectionService {
 
     Map<String, Object> cancleInformationCollection(Integer icid) throws Exception;
 
-    Map<String, Object> showAllInformationCollection(Integer uid) throws Exception;
+    Map<String, Object> showAllInformationCollection(Integer uid,Integer pageNo, Integer pageSize) throws Exception;
 }

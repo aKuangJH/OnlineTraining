@@ -20,4 +20,6 @@ public interface QuestionCollectionMapper {
     List<QuestionCollection> getAllQuestionCollection(Integer uid);
 
     int deleteByUidAndQid(Integer uid, Integer qid);
+
+    QuestionCollection queryCollection(Integer uid, Integer qid);
 }

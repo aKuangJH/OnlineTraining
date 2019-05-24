@@ -46,19 +46,34 @@ public class AnswerServiceImpl implements AnswerService {
     @Override
     public Map<String, Object> addAnswer(Integer uid, Integer tid, String answer) throws Exception {
         Map<String, Object> map;
+
         Answer useranswer = new Answer();
         useranswer.setUid(uid);
         useranswer.setTid(tid);
         useranswer.setAnswer(answer);
         useranswer.setCreatetime(new Date());
 
-        int result = answerMapper.insert(useranswer);
-        int result2 = setGrade(tid, answer, uid);
+        Answer existanswer = answerMapper.selectByTidAndUid(tid,uid);
+        if(null != existanswer){
+            useranswer.setAid(existanswer.getAid());
+            // 曾经做过此套试题，更新答案
+            int updateresult = answerMapper.updateByPrimaryKey(useranswer);
+            int result2 = setGrade(tid, answer, uid);
 
-        if(result > 0 && result2 >0){
-            map = ReturnHelper.success("success");
+            if(updateresult > 0 && result2 >0){
+                map = ReturnHelper.success("success");
+            }else {
+                map = ReturnHelper.fail("fail");
+            }
         }else {
-            map = ReturnHelper.fail("fail");
+            int result = answerMapper.insert(useranswer);
+            int result2 = setGrade(tid, answer, uid);
+
+            if(result > 0 && result2 >0){
+                map = ReturnHelper.success("success");
+            }else {
+                map = ReturnHelper.fail("fail");
+            }
         }
         return map;
     }
@@ -69,10 +84,10 @@ public class AnswerServiceImpl implements AnswerService {
         AnswerViewModel vm = new AnswerViewModel();
         List<Question> questions = questionMapper.selectByTid(tid);
         if(null != questions && questions.size() > 0){
-            Map<Integer,String> rightAnswerMap = new HashMap<Integer,String>();
+            Map<String, String> rightAnswerMap = new HashMap<String,String>();
 
             for(int i=0;i<questions.size();i++){
-                rightAnswerMap.put(i,questions.get(i).getQanswer());
+                rightAnswerMap.put(String.valueOf(i),questions.get(i).getQanswer());
             }
             String rightanswer = JSONObject.toJSONString(rightAnswerMap);
 

@@ -73,7 +73,7 @@ public class InformationCollectionController {
 
     @RequestMapping(value = "showallinformationcollection")
     @ApiOperation(value = "显示所有收藏帖子", httpMethod = "GET", notes = "显示所有收藏帖子")
-    public Map<String, Object> cancleInformationCollection(HttpServletRequest request){
+    public Map<String, Object> cancleInformationCollection(HttpServletRequest request,@RequestParam("pageNo") Integer pageNo, @RequestParam("pageSize") Integer pageSize){
         Map<String, Object> map = new HashMap<String, Object>();
         try {
             /**
@@ -84,7 +84,9 @@ public class InformationCollectionController {
                 return map;
             }
             int uid = Integer.parseInt(CookieHelper.getCookieValue(request, "uid"));
-            map = informationCollectionService.showAllInformationCollection(uid);
+            if(null != pageNo && null != pageSize){
+                map = informationCollectionService.showAllInformationCollection(uid,pageNo,pageSize);
+            }
         }catch (Exception e){
             System.out.println(e);
         }

@@ -18,4 +18,6 @@ public interface InformationCollectionMapper {
     int updateByPrimaryKey(InformationCollection record);
 
     List<InformationCollection> selectAllCollectionByUid(Integer uid);
+
+    InformationCollection queryexist(Integer uid, Integer infoid);
 }

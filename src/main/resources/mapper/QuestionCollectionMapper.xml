@@ -75,4 +75,7 @@
     delete from train_question_collection
     where uid = #{arg0} and qid = #{arg1}
   </delete>
+  <select id="queryCollection" resultMap="BaseResultMap">
+    select * from train_question_collection where uid = #{arg0} and qid = #{arg1}
+  </select>
 </mapper>

@@ -1,6 +1,7 @@
 package com.cn.train.controller;
 
 import com.cn.train.service.AnswerService;
+import com.cn.train.utils.CookieHelper;
 import com.cn.train.utils.ReturnHelper;
 import com.wordnik.swagger.annotations.Api;
 import com.wordnik.swagger.annotations.ApiOperation;
@@ -37,13 +38,13 @@ public class AnswerController {
         try {
             if(null != tid && StringUtils.isNotBlank(answer)){
 
-//                if(null == CookieHelper.getCookieValue(request, "uid")){
-//                    map = ReturnHelper.fail("获取不到uid");
-//                    return map;
-//                }
-//
-//                int uid = Integer.parseInt(CookieHelper.getCookieValue(request, "uid"));
-                map = answerService.addAnswer(1, tid, answer);
+                if(null == CookieHelper.getCookieValue(request, "uid")){
+                    map = ReturnHelper.fail("获取不到uid");
+                    return map;
+                }
+
+                int uid = Integer.parseInt(CookieHelper.getCookieValue(request, "uid"));
+                map = answerService.addAnswer(uid, tid, answer);
             }else {
                 map = ReturnHelper.fail("参数校验失败");
             }

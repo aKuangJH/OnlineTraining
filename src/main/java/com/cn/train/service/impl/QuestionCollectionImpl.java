@@ -107,14 +107,20 @@ public class QuestionCollectionImpl implements QuestionCollectionService {
     @Override
     public Map<String, Object> collectQuestion(Integer uid, Integer qid) throws Exception {
         Map<String, Object> map;
-        QuestionCollection questionCollection = new QuestionCollection();
-        questionCollection.setQid(qid);
-        questionCollection.setUid(uid);
-        int result = questionCollectionMapper.insert(questionCollection);
-        if(result > 0){
-            map = ReturnHelper.success("success");
+        QuestionCollection existcollect = questionCollectionMapper.queryCollection(uid,qid);
+        if(null != existcollect){
+            map = ReturnHelper.fail("fail,已经收藏");
+            map.put("code",-1);
         }else {
-            map = ReturnHelper.fail("fail");
+            QuestionCollection questionCollection = new QuestionCollection();
+            questionCollection.setQid(qid);
+            questionCollection.setUid(uid);
+            int result = questionCollectionMapper.insert(questionCollection);
+            if(result > 0){
+                map = ReturnHelper.success("success");
+            }else {
+                map = ReturnHelper.fail("fail");
+            }
         }
         return map;
     }

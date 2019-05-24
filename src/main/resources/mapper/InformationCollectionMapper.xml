@@ -82,4 +82,7 @@
   <select id="selectAllCollectionByUid" resultMap="BaseResultMap">
     select * from train_information_collection where uid = #{arg0}
   </select>
+  <select id="queryexist" resultMap="BaseResultMap">
+    select * from train_information_collection where uid = #{arg0} and infoid = #{arg1}
+  </select>
 </mapper>
